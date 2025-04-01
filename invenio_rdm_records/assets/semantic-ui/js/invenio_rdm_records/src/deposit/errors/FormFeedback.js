@@ -213,11 +213,19 @@ class DisconnectedFormFeedback extends Component {
 
     const backendErrorMessage = errors.message;
 
-    // Retrieve the corresponding icon and type
-    const { icon, type } = feedbackConfig[feedback] || {};
+    // Retrieve the corresponding icon and type if the feedback is a valid key,
+    // else fallback to warning.
+    const { icon, type } = feedbackConfig[feedback] || feedbackConfig["warning"];
 
+    // generate dynamic id for easy getElementById calls.
+    // see feedbackConfig for possible values.
     return (
-      <Message visible {...{ [type]: true }} className="flashed top attached">
+      <Message
+        visible
+        {...{ [type]: true }}
+        className="flashed top attached"
+        id={type + "-feedback-div"}
+      >
         <Grid container>
           <Grid.Column width={15} textAlign="left">
             <strong>
